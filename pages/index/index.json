@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "SearchBar":"../../components/SearchBar/SearchBar"
+    "SearchBar":"../../components/SearchBar/SearchBar",
+    "myswiper":"../../components/myswiper/myswiper"
   },
   "navigationBarTitleText": "Weixin"
 }

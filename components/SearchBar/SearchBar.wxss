@@ -1,5 +1,5 @@
 .search_bar {
-  height: 90rpx;
+  height: 100rpx;
   padding: 10rpx;
   background-color: var(--themeColor);
 }
@@ -9,9 +9,9 @@
   justify-content: center;
   align-items: center;
   background-color: #fff;
-  border-radius: 15rpx;
+  border-radius: 30rpx;
   color: #666;
 }
 .search_bar navigator icon {
-  padding-right: 5rpx;
+  padding-right: 30rpx;
 }

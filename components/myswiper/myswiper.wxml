@@ -1,0 +1,17 @@
+<!--components/swiper/swiper.wxml-->
+<view class='container'>
+ <scroll-view style="display:flex;width:100%" scroll-y>
+    <view class="container">
+      <swiper style="width:100%;height:360rpx;margin-top:10rpx;" bindchange="changeSwiper" previous-margin="90rpx" next-margin="90rpx"
+      display-multiple-items='1' autoplay="true" circular="true">
+        <block wx:for="{{imgList}}" wx:key>
+          <swiper-item class="swiperItem">
+            <image mode="aspectFill" src='{{item.img}}' class="imageItem {{currentIndex == index ? 'active': ''}}"> </image>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+  </scroll-view>
+</view>
+
+

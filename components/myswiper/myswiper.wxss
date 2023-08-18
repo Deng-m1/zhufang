@@ -1,4 +1,4 @@
-/* pages/message/index.wxss */
+/* components/swiper/swiper.wxss */
 page {
     background: #f6f6f6;
   }
