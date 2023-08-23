@@ -2,8 +2,8 @@
   "usingComponents": {
     "SearchBar":"../../components/SearchBar/SearchBar",
     "myswiper":"../../components/myswiper/myswiper",
-    "h-search": "/components/search/cmp",
-    "h-houseInfo": "/components/houseInfo/cmp"
+    "h-search": "../../components/search/cmp",
+    "h-houseInfo": "../../components/houseInfo/cmp"
   },
   "navigationBarTitleText": "Weixin"
 

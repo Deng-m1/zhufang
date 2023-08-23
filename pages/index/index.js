@@ -3,12 +3,26 @@ import {
     getBaseUrl,
     requestUtil
 } from "../../utils/requestUtil.js";
+
+var QQMapWX = require('../../libs/qqmap-wx-jssdk');
+var qqmapsdk;
+
+import { HouseModel } from '../../model/recommend';
+var houseModel = new HouseModel();
+import handleImgList from '../../utils/handleImgList';
+
+var Moment = require("../../utils/moment.js");
 import regeneratorRuntime, {
     async
-} from '../../lib/runtime/runtime';
+} from '../../libs/runtime/runtime';
+
 Page({
     data: {
-        swiperlist: [],
+        // 轮播图部分
+        swiperImg: ['https://p0.meituan.net/750.0.0/tdchotel/f1cd131254f350e6d7c6717a49c03489307738.jpg',
+            'https://p0.meituan.net/750.0.0/tdchoteldark/2d3f7729cdad16bbc702d43392179a41565998.jpg',
+            'https://p0.meituan.net/750.0.0/tdchotel/18d9806aed15e6735f3831f655963478610742.jpg'
+        ],
         houses: {
             "cityEnName": "bj"
         },
@@ -43,6 +57,10 @@ Page({
 
 
     onLoad: function (Options) {
+        qqmapsdk = new QQMapWX({
+            key: 'DSABZ-WAWWU-CE7VW-GKSWS-5ES76-5HBU5'
+          });
+          this.addrAuthorized();
 
 
         wx.request({
@@ -67,6 +85,46 @@ Page({
 
         this.getddd();
     },
+    addrAuthorized() {
+        var self = this;
+        wx.getSetting({
+          success(res) {
+            // console.log(res);
+            // res.authSetting['scope.userLocation'] == undefined    表示 初始化进入该页面
+            // res.authSetting['scope.userLocation'] == false    表示 非初始化进入该页面,且未授权
+            // res.authSetting['scope.userLocation'] == true    表示 地理位置授权
+            if (res.authSetting['scope.userLocation'] !== 'undefined' && res.authSetting['scope.userLocation'] !== true) {
+              wx.showModal({
+                title: '请求授权当前位置',
+                content: '需要获取您的地理位置，请确认授权',
+                success(res) {
+                  console.log(res);
+                  // 用户点击了取消按钮
+                  if (res.cancel) {
+                    wx.showToast({
+                      title: '拒绝授权',
+                      image: '../../images/refuse.png',
+                      duration: 1000
+                    })
+                    self.getRecommend(self.data.city);
+                  } else {
+                    wx.showToast({
+                      title: '授权成功',
+                      image: '../../images/success.png',
+                      duration: 1000
+                    })
+                    // 授权成功 调用wx.getLocation()
+                    self.getLocation();
+                  }
+                }
+              })
+            } else {
+              // 地理位置已授权
+              self.getLocation();
+            }
+          }
+        })
+      },
     async getddd() {
         const result = await requestUtil({
             url: 'house/15',
